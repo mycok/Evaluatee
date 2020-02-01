@@ -1,0 +1,7 @@
+venv
+htmlcov
+.dockerignore
+Dockerfile-dev
+Dockerfile-prod
+.github/
+.vscode/
