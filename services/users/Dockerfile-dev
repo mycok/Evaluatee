@@ -1,5 +1,10 @@
 FROM python:3.6.6
 
+# install environment dependencies
+RUN apt-get update && \
+    apt-get -y install netcat && \
+    apt-get clean
+
 # set the working directory
 RUN mkdir -p /usr/src/app
 
@@ -11,8 +16,12 @@ COPY ./requirements.txt /usr/src/app/requirements.txt
 # install requirements
 RUN pip install -r requirements.txt
 
+# add entrypoint
+COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
+RUN chmod +x /usr/src/app/entrypoint.sh
+
 # add app
 COPY . /usr/src/app
 
 # run the server
-CMD python manage.py run -h 0.0.0.0
+CMD ["/usr/src/app/entrypoint.sh"]
